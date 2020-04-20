@@ -1,2 +1,6 @@
-title: English i18n Example
+title: English i18n
 hello: world
+footer: Made with `<3` by CTH
+flags:
+  en: 🇬🇧
+  de: 🇩🇪

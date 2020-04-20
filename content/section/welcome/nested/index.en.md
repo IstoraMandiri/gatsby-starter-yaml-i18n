@@ -1,11 +1,7 @@
 ---
-title: Welcome
-description: A welcome page
-author: Mr Jones
-date: 2020-01-10
-tags: ["something"]
+title: Nested Welcome
 ---
 
-# Welcome!
+# Nested
 
-This is an example page in english using just a markdown file.
+This is an example page in english using just another markdown file.

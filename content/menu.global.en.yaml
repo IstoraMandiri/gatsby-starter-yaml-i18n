@@ -1,5 +1,12 @@
 -
-  page: one
+  key: home
+  to: /
+  name: Home
 -
-  key: three
-  page: two
+  key: section
+  to: /section
+  name: Sub-Section
+-
+  key: blog
+  to: /blog
+  name: Blog

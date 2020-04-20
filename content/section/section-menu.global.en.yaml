@@ -1,9 +1,12 @@
 -
   key: welcome
   name: Welcome
+  to: /section/welcome
 -
   key: contact
   name: Contact
+  to: /section/contact
 -
   key: info
   name: Information
+  to: /section/info

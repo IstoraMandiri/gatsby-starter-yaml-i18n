@@ -1,3 +1,9 @@
 -
-  key: three
-  page: swvaiai
+  key: home
+  name: GHOM
+-
+  key: section
+  name: GSUB
+-
+  key: blog
+  name: GBLOG
