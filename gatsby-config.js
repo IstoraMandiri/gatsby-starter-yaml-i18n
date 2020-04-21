@@ -8,7 +8,14 @@ module.exports = {
       resolve: 'gatsby-source-filesystem',
       options: {
         path: `${__dirname}/content`,
-        name: 'yaml-i18n'
+        name: 'yaml-i18n-content'
+      }
+    },
+    {
+      resolve: 'gatsby-source-filesystem',
+      options: {
+        path: `${__dirname}/src/templates`,
+        name: 'yaml-i18n-templates'
       }
     },
     {

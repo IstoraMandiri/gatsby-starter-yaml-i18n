@@ -1,7 +1,6 @@
 import React from 'react'
 import { graphql, Link } from 'gatsby'
 
-import Json from '../../components/json'
 import Layout from '../../components/layout'
 import LocalizedMenu from '../../components/localizedMenu'
 
@@ -12,16 +11,15 @@ export default ({ data: { collections }, pageContext, pageContext: { relativePat
     {relativePath.startsWith('section/welcome') && <Link to={`${linkPrefix}/section/welcome/nested`}>Nested Item</Link>}
     <hr/>
     Everything in this section has additional routes!
-    <Json data={{ collections, i18n }} />
   </Layout>
 )
 
 export const query = graphql`
   query ($locale: String!, $relativePath: String!) {
-    collections: allYamlI18NCollection(
-      filter: { 
-        locale: { eq: $locale } 
-        path: { eq: $relativePath }
+    collections: allI18NCollection(
+      filter: {
+        locale: { eq: $locale }
+        directory: { eq: $relativePath }
       }
     ) {
       edges {
