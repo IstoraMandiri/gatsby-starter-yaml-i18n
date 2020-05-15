@@ -1,36 +1,51 @@
-import React from 'react'
-import { graphql, Link } from 'gatsby'
+import React from "react"
+import { graphql } from "gatsby"
 
-import Layout from '../../components/layout'
-import LocalizedMenu from '../../components/localizedMenu'
+import { I18nLink as Link } from "gatsby-plugin-yaml-i18n"
 
-export default ({ data: { collections }, pageContext, pageContext: { relativePath, linkPrefix, i18n } }) => (
+import Layout from "../../components/layout"
+import LocalizedMenu from "../../components/localizedMenu"
+import Json from "../../components/json"
+
+export default ({ data, pageContext, pageContext: { relativePath, i18n } }) => (
   <Layout pageContext={pageContext} color="green">
     <h2>Sub Section</h2>
-    <LocalizedMenu items={i18n.globals.sectionMenu} linkPrefix={linkPrefix} />
-    {relativePath.startsWith('section/welcome') && <Link to={`${linkPrefix}/section/welcome/nested`}>Nested Item</Link>}
-    <hr/>
-    Everything in this section has additional routes!
+    <LocalizedMenu items={i18n.globals.sectionMenu} />
+    {relativePath.startsWith("section/welcome") && (
+      <Link to="/section/welcome/nested">Nested Item</Link>
+    )}
+    <hr />
+    <Json data={data} />
   </Layout>
 )
 
 export const query = graphql`
-  query ($locale: String!, $relativePath: String!) {
-    collections: allI18NCollection(
+  query($mdxId: String, $locale: String!, $relativePath: String!) {
+    markdown: allMdx(filter: { id: { eq: $mdxId } }) {
+      nodes {
+        id
+        excerpt
+        frontmatter {
+          title
+        }
+      }
+    }
+    collections: allYamlI18N(
       filter: {
         locale: { eq: $locale }
-        directory: { eq: $relativePath }
+        relativeDirectory: { eq: $relativePath }
+        type: { eq: "collection" }
       }
     ) {
-      edges {
-        node {
+      nodes {
+        id
+        relativeDirectory
+        type
+        data {
+          tags
           name
-          content {
-            name
-          }
         }
       }
     }
   }
-
 `

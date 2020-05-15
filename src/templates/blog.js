@@ -1,39 +1,43 @@
-import React from 'react'
-import { graphql, Link } from 'gatsby'
+import React from "react"
+import { graphql } from "gatsby"
 
-import Layout from '../components/layout'
+import { I18nLink as Link } from "gatsby-plugin-yaml-i18n"
 
-export default ({ data: { blog }, pageContext, pageContext: { linkPrefix } }) => (
+import Layout from "../components/layout"
+
+export default ({ data: { blogs }, pageContext }) => (
   <Layout pageContext={pageContext} color="blue">
     <h2>Blog</h2>
     This is a fancier layout just for the landing page.
-    {blog.nodes.map(node => (
-      <div key={node.id} style={{ margin: '10px 0' }}>
-        <Link to={`${linkPrefix}${node.fields.i18n.directory}`}>{node.frontmatter.title}</Link>
+    {blogs.nodes.map(node => (
+      <div key={node.id} style={{ margin: "10px 0" }}>
+        <Link to={`/${node.relativeDirectory}`}>{node.data.title}</Link>
         <br />
-        {node.excerpt}
+        {node.parent.excerpt}
       </div>
     ))}
   </Layout>
 )
 
 export const query = graphql`
-  query MyQuery($locale: String!) {
-    blog: allMdx(filter: {fields: {i18n: {locale: {eq: $locale}, parentDirectory: {eq: "blog"}}}}) {
+  query($locale: String!) {
+    blogs: allYamlI18N(
+      filter: { locale: { eq: $locale }, parentDirectory: { in: ["blog"] } }
+      sort: { fields: data___date, order: DESC }
+    ) {
       nodes {
-        fields {
-          i18n {
-            locale
-            directory
-            parentDirectory
-          }
-        }
         id
-        excerpt
-        frontmatter {
-          date
-          author
+        relativeDirectory
+        type
+        data {
           title
+          author
+          date
+        }
+        parent {
+          ... on Mdx {
+            excerpt(pruneLength: 180)
+          }
         }
       }
     }
